@@ -144,7 +144,7 @@ def _resp(status_code: int, body: dict):
 
 ## How the Code Works (Step-by-Step)
 
-#### Step 1 — Set Region and Model
+#### Step 1 - Set Region and Model
 
 ```python
 AWS_REGION_BEDROCK = "us-east-1"
@@ -157,7 +157,7 @@ We specify:
 - The Nova model we want to use
 Make sure the model you choose is available in your region.
 
-#### Step 2 — Read the Input
+#### Step 2 - Read the Input
 
 When you test the Lambda function, you send a JSON object like this:
 
@@ -177,7 +177,7 @@ text = event.get("text")
 points = event.get("points")
 ```
 
-#### Step 3 — Build the Prompt
+#### Step 3 - Build the Prompt
 
 Nova uses a messages format, similar to chatting with an AI.
 
@@ -194,7 +194,7 @@ The inference settings control:
 - Creativity
 - Consistency
 
-#### Step 4 — Call Amazon Bedrock
+#### Step 4 - Call Amazon Bedrock
 
 ```python
 response = client.invoke_model(...)
@@ -202,7 +202,7 @@ response = client.invoke_model(...)
 
 This sends the prompt to Nova and waits for the summary response.
 
-#### Step 5 — Extract the Summary
+#### Step 5 - Extract the Summary
 
 Nova returns structured content blocks.
 
@@ -213,6 +213,8 @@ response_body["output"]["message"]["content"][0]["text"]
 ```
 
 That’s the summary.
+
+---
 
 #### Example Test Event
 
