@@ -7,10 +7,7 @@ In this project, you'll build a simple text summarizer using:
 - **Amazon Nova Micro**
 - **Python**
 
-This project matches my YouTube tutorial:
-
-▶️ Watch the full video here:  
-https://youtube.com/YOUR_VIDEO_LINK_HERE
+This project matches my YouTube tutorial. Watch the full video here: https://youtube.com/YOUR_VIDEO_LINK_HERE
 
 ---
 
@@ -48,11 +45,9 @@ To follow along, you’ll need to create the Lambda function first.
 
 I’ve included step-by-step instructions (with screenshots) here:
 
-👉 Lambda Setup Guide:  
-https://github.com/YOUR_USERNAME/YOUR_REPO/blob/main/LAMBDA_SETUP.md
+**Lambda Setup Guide**: https://github.com/angie0120/lambda-text-summarizer
 
 That guide covers:
-
 - Creating the Lambda function  
 - Choosing the Python runtime  
 - Attaching Bedrock permissions  
