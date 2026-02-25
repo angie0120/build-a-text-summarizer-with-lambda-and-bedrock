@@ -116,74 +116,93 @@ def _response(status_code, body):
 ## How the Code Works (Step-by-Step)
 
 #### Step 1 - Set Region and Model
+Make sure the model you choose is available in your region.
 
 ```python
 AWS_REGION_BEDROCK = "us-east-1"
 MODEL_ID = "amazon.nova-micro-v1:0"
 ```
 
-We specify:
-
-- The AWS region
-- The Nova model we want to use
-Make sure the model you choose is available in your region.
-
 #### Step 2 - Read the Input
 
-When you test the Lambda function, you send a JSON object like this:
-
-```json
-{
-  "text": "Your paragraph here...",
-  "points": 3
-}
-```
-
-Lambda automatically converts that into a Python dictionary called event.
-
-We extract the values we need:
+Inside lambda_handler, the first thing we do is grab the values from the event:
 
 ```python
 text = event.get("text")
 points = event.get("points")
 ```
 
+When we click “Test” in Lambda, AWS sends our JSON into this function as a dictionary called event.
+So here, we’re just pulling out:
+- The paragraph to summarize
+- The number of bullet points
+
 #### Step 3 - Build the Prompt
 
-Nova uses a messages format, similar to chatting with an AI.
-
-We build a prompt and send it inside:
+Next, we create the message we want to send to Nova.
 
 ```python
-"schemaVersion": "messages-v1",
-"messages": [...]
-"inferenceConfig": {...}
+prompt = f"""Text:
+{text}
+
+Summarize the text into {points} bullet points.
+"""
 ```
 
-The inference settings control:
-- Maximum length
-- Creativity
-- Consistency
+Now here’s something important. Nova doesn’t automatically know we want a summary. There’s no special summary mode.
+We tell it what to do right here:
+This sentence is the instruction - “Summarize the text into 3 bullet points”,
+If I changed that line to “Rewrite the paragraph as a poem,” I’d get a poem instead.
+
+Then we wrap that prompt in Nova’s required format:
+
+```python
+request_body = {
+"schemaVersion": "messages-v1",
+"messages": [
+{
+"role": "user",
+"content": [{"text": prompt}]
+}
+],
+"inferenceConfig": {
+"maxTokens": 512,
+"temperature": 0,
+"topP": 1
+}
+}
+```
+
+Nova expects a “messages” structure similar to chatting with an AI.
 
 #### Step 4 - Call Amazon Bedrock
 
+Now that we’ve built our instruction, we send it to Nova:
+
 ```python
-response = client.invoke_model(...)
+response = client.invoke_model(
+modelId=MODEL_ID,
+body=json.dumps(request_body),
+accept="application/json",
+contentType="application/json",
+)
 ```
 
-This sends the prompt to Nova and waits for the summary response.
+This sends our prompt to Nova. Nova processes it and sends back a response.
 
 #### Step 5 - Extract the Summary
 
-Nova returns structured content blocks.
-
-We extract the text from:
+Finally, we extract the summary text:
 
 ```python
-response_body["output"]["message"]["content"][0]["text"]
+summary = response_body["output"]["message"]["content"][0]["text"]
 ```
 
-That’s the summary.
+And return it as a JSON response:
+
+```python
+return _response(200, {"summary": summary.strip()})
+```
 
 ---
 
@@ -214,20 +233,13 @@ That’s the summary.
 
 Your Lambda execution role must allow:
 
-```bedrock:InvokeModel```
-
-For beginners, attaching:
-
 ```AmazonBedrockFullAccess```
-
-is the simplest option.
 
 ---
 
 ### Next Steps
 
 From here, you could:
-- Turn this into an API
 - Connect it to a website
 - Process documents automatically
 - Extend it into a larger AI workflow
