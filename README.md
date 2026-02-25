@@ -217,7 +217,7 @@ return _response(200, {"summary": summary.strip()})
 
 #### Example Response
 
-```json
+```
 {
   "statusCode": 200,
 
@@ -231,9 +231,7 @@ return _response(200, {"summary": summary.strip()})
 
 ### Required Permissions
 
-Your Lambda execution role must allow:
-
-```AmazonBedrockFullAccess```
+Your Lambda execution role must allow: ```AmazonBedrockFullAccess```
 
 ---
 
@@ -246,7 +244,6 @@ From here, you could:
 
 ---
 
-📺 YouTube tutorial:
-https://youtube.com/YOUR_VIDEO_LINK_HERE
+📺 YouTube tutorial (link)
 
 [Lambda Setup Guide](https://github.com/angie0120/lambda-text-summarizer)
