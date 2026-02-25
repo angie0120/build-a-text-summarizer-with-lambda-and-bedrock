@@ -115,7 +115,7 @@ def _response(status_code, body):
 
 ## How the Code Works (Step-by-Step)
 
-#### Step 1 - Set Region and Model
+### Step 1 - Set Region and Model
 Make sure the model you choose is available in your region.
 
 ```python
@@ -123,7 +123,7 @@ AWS_REGION_BEDROCK = "us-east-1"
 MODEL_ID = "amazon.nova-micro-v1:0"
 ```
 
-#### Step 2 - Read the Input
+### Step 2 - Read the Input
 
 Inside lambda_handler, the first thing we do is grab the values from the event:
 
@@ -137,7 +137,7 @@ So here, we’re just pulling out:
 - The paragraph to summarize
 - The number of bullet points
 
-#### Step 3 - Build the Prompt
+### Step 3 - Build the Prompt
 
 Next, we create the message we want to send to Nova.
 
@@ -175,7 +175,7 @@ request_body = {
 
 Nova expects a “messages” structure similar to chatting with an AI.
 
-#### Step 4 - Call Amazon Bedrock
+### Step 4 - Call Amazon Bedrock
 
 Now that we’ve built our instruction, we send it to Nova:
 
@@ -190,7 +190,7 @@ contentType="application/json",
 
 This sends our prompt to Nova. Nova processes it and sends back a response.
 
-#### Step 5 - Extract the Summary
+### Step 5 - Extract the Summary
 
 Finally, we extract the summary text:
 
