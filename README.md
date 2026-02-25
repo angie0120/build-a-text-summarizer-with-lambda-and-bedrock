@@ -69,7 +69,12 @@ def lambda_handler(event, context):
     prompt = f"""Text:
 {text}
 
-Summarize the text into {points} bullet points.
+Summarize the text into {points} numbered points.
+
+Rules:
+- Use numbers starting from 1
+- One sentence per point
+- Keep each point concise
 """
 
     request_body = {
