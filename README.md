@@ -6,7 +6,7 @@ In this project, you'll build a simple text summarizer using:
 - **Amazon Bedrock** (Amazon Nova Micro model)
 - **Python**
 
-This project matches my YouTube tutorial. Watch the full video here: https://youtube.com/YOUR_VIDEO_LINK_HERE
+This project matches my YouTube tutorial. Watch the full video here: (link)
 
 ---
 
@@ -150,13 +150,18 @@ Next, we create the message we want to send to Nova.
 prompt = f"""Text:
 {text}
 
-Summarize the text into {points} bullet points.
+Summarize the text into {points} numbered points.
+
+Rules:
+- Use numbers starting from 1
+- One sentence per point
+- Keep each point concise
 """
 ```
 
 Now here’s something important. Nova doesn’t automatically know we want a summary. There’s no special summary mode.
 We tell it what to do right here:
-This sentence is the instruction - “Summarize the text into 3 bullet points”,
+This sentence is the instruction - “Summarize the text into {points} numbered points.”
 If I changed that line to “Rewrite the paragraph as a poem,” I’d get a poem instead.
 
 Then we wrap that prompt in Nova’s required format:
@@ -213,7 +218,7 @@ return _response(200, {"summary": summary.strip()})
 
 ## Example Test Event
 
-```josn
+```
 {
   "text": "Dogs and cats are two of the most popular pets in the world, each offering different types of companionship. Dogs are known for their loyalty and energetic nature, making them great companions for active individuals and families. Cats are more independent and typically require less daily attention, which appeals to busy people or those living in smaller spaces. Both pets can improve mental well-being by reducing stress and loneliness, but the right choice ultimately depends on a person’s lifestyle and preferences.",
   "points": 3
@@ -224,10 +229,11 @@ return _response(200, {"summary": summary.strip()})
 
 ```
 {
-  "statusCode": 200,
-
-  },
-  "body": "{\"summary\": \"- Dogs are loyal and energetic, ideal for active individuals and families.\\n- Cats are independent and require less daily attention, suitable for busy people or small spaces.\\n- Both dogs and cats can enhance mental well-being by reducing stress and loneliness, with the best choice depending on personal lifestyle and preferences.\"}"
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "body": "{\"summary\": \"1. Dogs are loyal and energetic, ideal for active individuals and families.  \\n2. Cats are independent and require less daily attention, suitable for busy people or small spaces.  \\n3. Both pets can enhance mental well-being by reducing stress and loneliness.\"}"
 }
 
 ```
