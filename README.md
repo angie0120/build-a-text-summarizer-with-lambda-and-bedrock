@@ -3,8 +3,7 @@
 In this project, you'll build a simple text summarizer using:
 
 - **AWS Lambda**
-- **Amazon Bedrock**
-- **Amazon Nova Micro**
+- **Amazon Bedrock** (Amazon Nova Micro model)
 - **Python**
 
 This project matches my YouTube tutorial. Watch the full video here: https://youtube.com/YOUR_VIDEO_LINK_HERE
@@ -15,7 +14,7 @@ This project matches my YouTube tutorial. Watch the full video here: https://you
 
 Let’s say you have a paragraph like this:
 
-> Pets like cats and dogs are wonderful companions because they bring comfort, joy, and love into our lives. They can help reduce stress, ease loneliness, and even encourage people to be more active through play and walks. Caring for a pet also fosters a sense of responsibility and routine, which can be especially helpful for children or anyone needing stability. Beyond the emotional benefits, pets create strong bonds that often feel like true friendship, always offering affection and loyalty in return for a little care and attention.
+> Dogs and cats are two of the most popular pets in the world, each offering different types of companionship. Dogs are known for their loyalty and energetic nature, making them great companions for active individuals and families. Cats are more independent and typically require less daily attention, which appeals to busy people or those living in smaller spaces. Both pets can improve mental well-being by reducing stress and loneliness, but the right choice ultimately depends on a person’s lifestyle and preferences.
 
 Instead of manually shrinking this into bullet points, we’ll build a Lambda function that:
 
@@ -24,30 +23,16 @@ Instead of manually shrinking this into bullet points, we’ll build a Lambda fu
 3. Calls Amazon Bedrock  
 4. Returns a structured summary  
 
-That’s it.
-
----
-
-## Architecture Overview
-
-Lambda (Python)  
-→ Amazon Bedrock (Nova Micro)  
-→ JSON Summary Response  
-
 ---
 
 ## Lambda Setup (Important)
 
-In previous projects, we ran Python scripts locally.  
-In this project, we're running our code in the cloud using AWS Lambda.
+In previous projects, we ran Python scripts locally. In this project, we're running our code in the cloud using AWS Lambda.
 
-To follow along, you’ll need to create the Lambda function first.
-
-I’ve included step-by-step instructions (with screenshots) here: [Lambda Setup Guide](https://github.com/angie0120/lambda-text-summarizer)
+To follow along, you’ll need to create the Lambda function first. I’ve included step-by-step instructions (with screenshots) here: [Lambda Setup Guide](https://github.com/angie0120/lambda-text-summarizer)
 
 That guide covers:
 - Creating the Lambda function  
-- Choosing the Python runtime  
 - Attaching Bedrock permissions  
 - Creating the test event  
 
@@ -68,46 +53,26 @@ client = boto3.client("bedrock-runtime", region_name=AWS_REGION_BEDROCK)
 
 def lambda_handler(event, context):
 
+    # Read input from test event
     text = event.get("text")
     points = event.get("points")
 
     if not text or points is None:
-        return _resp(400, {"error": "text and points required!"})
+        return _response(400, {"error": "text and points required"})
 
     try:
         points = int(points)
     except ValueError:
-        return _resp(400, {"error": "points must be an integer"})
+        return _response(400, {"error": "points must be an integer"})
 
-    request_body = build_nova_request(text, points)
-
-    response = client.invoke_model(
-        modelId=MODEL_ID,
-        body=request_body,
-        accept="application/json",
-        contentType="application/json",
-    )
-
-    response_body = json.loads(response["body"].read())
-    summary = response_body["output"]["message"]["content"][0]["text"]
-
-    return _resp(200, {"summary": summary.strip()})
-
-
-def build_nova_request(text: str, points: int) -> str:
-
+    # Build request body for Nova
     prompt = f"""Text:
 {text}
 
-Summarize the text into EXACTLY {points} bullet points.
-
-Rules:
-- Use '-' for each bullet
-- One sentence per bullet
-- Do not add any extra commentary
+Summarize the text into {points} bullet points.
 """
 
-    native_request = {
+    request_body = {
         "schemaVersion": "messages-v1",
         "messages": [
             {
@@ -122,10 +87,23 @@ Rules:
         }
     }
 
-    return json.dumps(native_request)
+    # Call Bedrock
+    response = client.invoke_model(
+        modelId=MODEL_ID,
+        body=json.dumps(request_body),
+        accept="application/json",
+        contentType="application/json",
+    )
+
+    response_body = json.loads(response["body"].read())
+
+    # Extract summary text
+    summary = response_body["output"]["message"]["content"][0]["text"]
+
+    return _response(200, {"summary": summary.strip()})
 
 
-def _resp(status_code: int, body: dict):
+def _response(status_code, body):
     return {
         "statusCode": status_code,
         "headers": {"Content-Type": "application/json"},
@@ -213,8 +191,8 @@ That’s the summary.
 
 ```josn
 {
-  "text": "Pets like cats and dogs are wonderful companions because they bring comfort, joy, and love into our lives. They can help reduce stress, ease loneliness, and even encourage people to be more active through play and walks. Caring for a pet also fosters a sense of responsibility and routine, which can be especially helpful for children or anyone needing stability. Beyond the emotional benefits, pets create strong bonds that often feel like true friendship, always offering affection and loyalty in return for a little care and attention.",
-  "points": 3
+  "text": "Dogs and cats are two of the most popular pets in the world, each offering different types of companionship. Dogs are known for their loyalty and energetic nature, making them great companions for active individuals and families. Cats are more independent and typically require less daily attention, which appeals to busy people or those living in smaller spaces. Both pets can improve mental well-being by reducing stress and loneliness, but the right choice ultimately depends on a person’s lifestyle and preferences.",
+  "points": 3
 }
 ```
 
@@ -222,9 +200,12 @@ That’s the summary.
 
 ```json
 {
-  "statusCode": 200,
-  "body": "{\"summary\":\"- Pets like cats and dogs bring comfort, joy, and love into our lives.\\n- They help reduce stress, ease loneliness, and encourage physical activity.\\n- Caring for a pet fosters a sense of responsibility and routine.\"}"
+  "statusCode": 200,
+
+  },
+  "body": "{\"summary\": \"- Dogs are loyal and energetic, ideal for active individuals and families.\\n- Cats are independent and require less daily attention, suitable for busy people or small spaces.\\n- Both dogs and cats can enhance mental well-being by reducing stress and loneliness, with the best choice depending on personal lifestyle and preferences.\"}"
 }
+
 ```
 
 ---
@@ -256,5 +237,4 @@ From here, you could:
 📺 YouTube tutorial:
 https://youtube.com/YOUR_VIDEO_LINK_HERE
 
-📘 Lambda setup guide:
-https://github.com/YOUR_USERNAME/YOUR_REPO/blob/main/LAMBDA_SETUP.md
+[Lambda Setup Guide](https://github.com/angie0120/lambda-text-summarizer)
