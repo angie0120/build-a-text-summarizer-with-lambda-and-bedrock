@@ -242,7 +242,7 @@ return _response(200, {"summary": summary.strip()})
 
 ## Required Permissions
 
-Your Lambda execution role used in the demo: ```AmazonBedrockFullAccess```
+The Lambda execution role used in the demo: ```AmazonBedrockFullAccess```
 
 ---
 
