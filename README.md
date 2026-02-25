@@ -1,4 +1,4 @@
-# Build a Text Summarizer with AWS Lambda + Amazon Bedrock (Beginners)
+# Build a Text Summarizer with AWS Lambda + Amazon Bedrock (Beginner)
 
 In this project, you'll build a simple text summarizer using:
 
@@ -206,7 +206,7 @@ return _response(200, {"summary": summary.strip()})
 
 ---
 
-#### Example Test Event
+## Example Test Event
 
 ```josn
 {
@@ -215,7 +215,7 @@ return _response(200, {"summary": summary.strip()})
 }
 ```
 
-#### Example Response
+### Example Response
 
 ```
 {
@@ -229,13 +229,13 @@ return _response(200, {"summary": summary.strip()})
 
 ---
 
-### Required Permissions
+## Required Permissions
 
 Your Lambda execution role must allow: ```AmazonBedrockFullAccess```
 
 ---
 
-### Next Steps
+## Next Steps
 
 From here, you could:
 - Connect it to a website
@@ -244,6 +244,7 @@ From here, you could:
 
 ---
 
-📺 YouTube tutorial (link)
+1. YouTube tutorial (link)
+2. [Lambda Setup Guide](https://github.com/angie0120/lambda-text-summarizer)
 
-[Lambda Setup Guide](https://github.com/angie0120/lambda-text-summarizer)
+---
