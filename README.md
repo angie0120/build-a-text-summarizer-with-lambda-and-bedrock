@@ -29,7 +29,7 @@ Instead of manually shrinking this into bullet points, we’ll build a Lambda fu
 
 In previous projects, we ran Python scripts locally. In this project, we're running our code in the cloud using AWS Lambda.
 
-To follow along, you’ll need to create the Lambda function first. I’ve included step-by-step instructions (with screenshots) here: [Lambda Setup Guide](guide/setup-guide)
+To follow along, you’ll need to create the Lambda function first. I’ve included step-by-step instructions (with screenshots) here: [Lambda Setup Guide](https://github.com/angie0120/lambda-text-summarizer)
 
 That guide covers:
 - Creating the Lambda function  
