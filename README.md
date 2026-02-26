@@ -6,7 +6,7 @@ In this project, you'll build a simple text summarizer using:
 - **Amazon Bedrock** (Amazon Nova Micro model)
 - **Python**
 
-This project matches my [YouTube video](link)
+This project matches my [YouTube video](https://youtu.be/3_t5cpJpLi4)
 
 ---
 
@@ -254,7 +254,7 @@ From here, you could:
 
 ---
 
-1. [YouTube](link)
+1. [YouTube](https://youtu.be/3_t5cpJpLi4)
 2. [Lambda Setup Guide](https://github.com/angie0120/lambda-text-summarizer)
 
 ---
