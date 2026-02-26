@@ -6,7 +6,7 @@ In this project, you'll build a simple text summarizer using:
 - **Amazon Bedrock** (Amazon Nova Micro model)
 - **Python**
 
-This project matches my YouTube tutorial. Watch the full video here: (link)
+This project matches my [YouTube video](link)
 
 ---
 
@@ -242,7 +242,7 @@ return _response(200, {"summary": summary.strip()})
 
 ## Required Permissions
 
-The Lambda execution role used in the demo: ```AmazonBedrockFullAccess```
+Lambda execution role used in the demo: ```AmazonBedrockFullAccess```
 
 ---
 
@@ -251,11 +251,10 @@ The Lambda execution role used in the demo: ```AmazonBedrockFullAccess```
 From here, you could:
 - Connect it to a website
 - Process documents automatically
-- Extend it into a larger AI workflow
 
 ---
 
-1. YouTube tutorial (link)
+1. [YouTube](link)
 2. [Lambda Setup Guide](https://github.com/angie0120/lambda-text-summarizer)
 
 ---
