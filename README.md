@@ -10,13 +10,13 @@ This project matches my [YouTube video](https://youtu.be/3_t5cpJpLi4)
 
 ---
 
-## What We're Building
+## What This Project Builds
 
 Let’s say you have a paragraph like this:
 
 > Dogs and cats are two of the most popular pets in the world, each offering different types of companionship. Dogs are known for their loyalty and energetic nature, making them great companions for active individuals and families. Cats are more independent and typically require less daily attention, which appeals to busy people or those living in smaller spaces. Both pets can improve mental well-being by reducing stress and loneliness, but the right choice ultimately depends on a person’s lifestyle and preferences.
 
-Instead of manually shrinking this into bullet points, we’ll build a Lambda function that:
+Instead of manually shrinking this into bullet points, this project builds a Lambda function that:
 
 1. Reads your input  
 2. Builds a prompt  
@@ -27,7 +27,7 @@ Instead of manually shrinking this into bullet points, we’ll build a Lambda fu
 
 ## Lambda Setup (Important)
 
-In previous projects, we ran Python scripts locally. In this project, we're running our code in the cloud using AWS Lambda.
+Instead of running the Python scripts locally, this project runs the code in the cloud using AWS Lambda.
 
 To follow along, you’ll need to create the Lambda function first. I’ve included step-by-step instructions (with screenshots) here: [Lambda Setup Guide](https://github.com/angie0120/lambda-text-summarizer)
 
@@ -130,7 +130,7 @@ MODEL_ID = "amazon.nova-micro-v1:0"
 
 ### Step 2 - Read the Input
 
-Inside lambda_handler, the first thing we do is grab the values from the event:
+Inside lambda_handler, the function first retrieves the values from the event:
 
 ```python
 text = event.get("text")
@@ -187,7 +187,7 @@ Nova expects a “messages” structure similar to chatting with an AI.
 
 ### Step 4 - Call Amazon Bedrock
 
-Now that we’ve built our instruction, we send it to Nova:
+After building the instruction, the request is sent to Nova:
 
 ```python
 response = client.invoke_model(
@@ -202,7 +202,7 @@ This sends our prompt to Nova. Nova processes it and sends back a response.
 
 ### Step 5 - Extract the Summary
 
-Finally, we extract the summary text:
+Finally, the summary text is extracted:
 
 ```python
 summary = response_body["output"]["message"]["content"][0]["text"]
