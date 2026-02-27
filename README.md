@@ -260,7 +260,7 @@ This isn’t just a summarizer, it’s an evidence helper. In GRC, you often nee
 
 ---
 
-1. [YouTube](https://youtu.be/3_t5cpJpLi4)
+1. [YouTube](https://youtu.be/3_t5cpJpLi4) Walkthrough
 2. [Lambda Setup Guide](https://github.com/angie0120/lambda-text-summarizer)
 
 ---
