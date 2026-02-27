@@ -203,9 +203,9 @@ The `invoke_model()` function sends a request from AWS Lambda to the Amazon Bedr
 
 In simple terms: **Lambda → Bedrock API → Nova model → Response → Lambda**
 
-Everything before this line prepares the request.
-This line sends it.
-Everything after this line processes the response.
+> Everything before the `invoke_model()` call prepares the request.
+> The `invoke_model()` call sends the request to Amazon Bedrock.
+> Everything after it processes the response.
 
 ### Step 5 - Extract the Summary
 
