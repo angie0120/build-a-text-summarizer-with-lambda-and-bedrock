@@ -159,9 +159,8 @@ Rules:
 """
 ```
 
-Now here’s something important. Nova doesn’t automatically know we want a summary. There’s no special summary mode.
-We tell it what to do right here:
-This sentence is the instruction - “Summarize the text into {points} numbered points.”
+Here’s something important to note - Nova doesn’t automatically know we want a summary. There’s no special summary mode.
+We have to give it instructions. This sentence in the Python script is the instruction: “Summarize the text into {points} numbered points.”
 If I changed that line to “Rewrite the paragraph as a poem,” I’d get a poem instead.
 
 Then we wrap that prompt in Nova’s required format:
@@ -187,7 +186,7 @@ Nova expects a “messages” structure similar to chatting with an AI.
 
 ### Step 4 - Call Amazon Bedrock
 
-After building the instruction, the request is sent to Nova:
+After building the instruction, the request is sent to Nova using the Bedrock Runtime API:
 
 ```python
 response = client.invoke_model(
@@ -198,7 +197,15 @@ contentType="application/json",
 )
 ```
 
-This sends our prompt to Nova. Nova processes it and sends back a response.
+**This is the actual API call.**
+
+The `invoke_model()` function sends a request from AWS Lambda to the Amazon Bedrock service. Behind the scenes, this makes a network request to AWS, which forwards the prompt to the Nova model and waits for a response.
+
+In simple terms: **Lambda → Bedrock API → Nova model → Response → Lambda**
+
+Everything before this line prepares the request.
+This line sends it.
+Everything after this line processes the response.
 
 ### Step 5 - Extract the Summary
 
