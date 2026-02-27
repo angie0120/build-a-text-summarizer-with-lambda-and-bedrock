@@ -254,6 +254,12 @@ From here, you could:
 
 ---
 
+## GRC Use Case
+
+This isn’t just a summarizer, it’s an evidence helper. In GRC, you often need to turn long text (policies, vendor questionnaires, incident summaries) into short, consistent notes for audits. This Lambda function standardizes that output into numbered points you can store as supporting evidence (with human review). It aligns with documentation and review expectations across SOC 2, NIST 800-53, and ISO/IEC 42001.
+
+---
+
 1. [YouTube](https://youtu.be/3_t5cpJpLi4)
 2. [Lambda Setup Guide](https://github.com/angie0120/lambda-text-summarizer)
 
